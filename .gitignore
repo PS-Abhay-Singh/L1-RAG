@@ -1,3 +1,9 @@
 .venv
 __pycache__
 cmd.txt
+
+# Ignore data files, keep folder structure
+data/pdfs/*
+data/processed/*
+!data/pdfs/.gitkeep
+!data/processed/.gitkeep
