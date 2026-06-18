@@ -1,22 +1,27 @@
 from ..llm.ollama_client import get_llm
 
-
 def understand_query(query: str):
 
     llm = get_llm()
 
     prompt = f"""
-    You are a Query Understanding Agent.
+You are a Query Understanding Agent.
 
-    Analyze the query and identify:
+Analyze the query.
 
-    1. Intent
-    2. Topics
-    3. Query Type
+Return ONLY valid JSON.
 
-    Query:
-    {query}
-    """
+Format:
+
+{{
+    "intent": "",
+    "topics": [],
+    "query_type": ""
+}}
+
+Query:
+{query}
+"""
 
     response = llm.invoke(prompt)
 

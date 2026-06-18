@@ -1,8 +1,11 @@
-from .agents import understand_query
+from backend.app.agents import understand_query
+from backend.app.agents import translate_query
 
 
 query = "Compare GraphRAG and Agentic RAG"
 
-result = understand_query(query)
+print("===== QUERY UNDERSTANDING =====")
+print(understand_query(query))
 
-print(result)
+print("\n===== QUERY TRANSLATION =====")
+print(translate_query(query))

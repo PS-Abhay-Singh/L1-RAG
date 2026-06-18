@@ -1,14 +1,30 @@
 from langchain_core.prompts import ChatPromptTemplate
 from ..llm import get_llm
 
-llm = get_llm()
 
-prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a research assistant. Rewrite the user query into 3 alternative search queries optimized for academic paper retrieval. Return as a JSON list."),
-    ("human", "{query}")
-])
+def translate_query(query: str):
 
-chain = prompt | llm
+    llm = get_llm()
 
-def translate_query(query: str) -> str:
-    return chain.invoke({"query": query}).content
+    prompt = f"""
+    You are a Query Translation Agent.
+
+    Generate search queries that will help retrieve
+    research papers related to the user query.
+
+    Return ONLY a valid JSON array.
+
+    Example:
+
+    [
+        "GraphRAG architecture",
+        "GraphRAG advantages"
+    ]
+
+    Query:
+    {query}
+    """
+
+    response = llm.invoke(prompt)
+
+    return response.content
