@@ -1,4 +1,4 @@
-from .agents import understand_query
+from backend.app.agents import understand_query
 
 
 query = "Compare GraphRAG and Agentic RAG"
