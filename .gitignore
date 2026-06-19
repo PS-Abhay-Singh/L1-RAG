@@ -1,7 +1,6 @@
 .venv
 __pycache__
 cmd.txt
-.env
 
 # Ignore data files, keep folder structure
 data/pdfs/*
