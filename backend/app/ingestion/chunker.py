@@ -1,4 +1,3 @@
-# Split extracted text into chunks for embedding
 import re
 
 
@@ -7,32 +6,38 @@ class SectionChunker:
     @staticmethod
     def chunk(text: str):
 
-        pattern = r"(\n\d+\s+[A-Z][A-Za-z\s\-]+\n)"
+        pattern = r"\n(\d+\s+[A-Z][A-Za-z\s\-]+)"
 
-        parts = re.split(pattern, text)
+        matches = list(re.finditer(pattern, text))
 
         chunks = []
 
-        current_section = "Unknown"
+        # Abstract chunk
+        if matches:
+            abstract_text = text[:matches[0].start()].strip()
 
-        for part in parts:
+            chunks.append({
+                "section": "Abstract",
+                "content": abstract_text
+            })
 
-            part = part.strip()
+        # Sections
+        for i in range(len(matches)):
 
-            if not part:
-                continue
+            section_name = matches[i].group(1).strip()
 
-            if re.match(r"^\d+\s+", part):
+            start = matches[i].end()
 
-                current_section = part
-
+            if i + 1 < len(matches):
+                end = matches[i + 1].start()
             else:
+                end = len(text)
 
-                chunks.append(
-                    {
-                        "section": current_section,
-                        "content": part
-                    }
-                )
+            content = text[start:end].strip()
+
+            chunks.append({
+                "section": section_name,
+                "content": content
+            })
 
         return chunks

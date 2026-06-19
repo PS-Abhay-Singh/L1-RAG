@@ -35,7 +35,7 @@ class DocumentProcessor:
             )
 
             record = {
-                "id": f'{metadata["title"]}_{chunk["chunk_id"]}',
+                "id": f'{chunk["section"]}_{chunk["chunk_id"]}_{len(records)}',
                 "values": embedding,
                 "metadata": {
                     "paper_title": metadata["title"],
