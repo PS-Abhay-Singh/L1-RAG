@@ -1,5 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate
 from ..llm import get_llm
+import json
 
 
 def translate_query(query: str):
@@ -9,10 +10,16 @@ def translate_query(query: str):
     prompt = f"""
     You are a Query Translation Agent.
 
-    Generate search queries that will help retrieve
-    research papers related to the user query.
+    Generate 4 diverse search queries.
 
-    Return ONLY a valid JSON array.
+Each query should explore a different aspect:
+
+1. Definition
+2. Architecture
+3. Methodology
+4. Advantages / Evaluation
+
+    Return ONLY a JSON array.
 
     Example:
 
@@ -27,4 +34,7 @@ def translate_query(query: str):
 
     response = llm.invoke(prompt)
 
-    return response.content
+    try:
+        return json.loads(response.content)
+    except:
+        return [query]
