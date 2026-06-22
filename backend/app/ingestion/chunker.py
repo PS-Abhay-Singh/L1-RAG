@@ -6,38 +6,37 @@ class SectionChunker:
     @staticmethod
     def chunk(text: str):
 
-        pattern = r"\n(\d+\s+[A-Z][A-Za-z\s\-]+)"
+        lines = text.splitlines()
 
-        matches = list(re.finditer(pattern, text))
+        sections = []
 
-        chunks = []
+        current_section = "Abstract"
+        current_content = []
 
-        # Abstract chunk
-        if matches:
-            abstract_text = text[:matches[0].start()].strip()
+        for line in lines:
 
-            chunks.append({
-                "section": "Abstract",
-                "content": abstract_text
-            })
+            line = line.strip()
 
-        # Sections
-        for i in range(len(matches)):
+            if not line:
+                continue
 
-            section_name = matches[i].group(1).strip()
+            if re.match(r"^\d+\s+[A-Z]", line):
 
-            start = matches[i].end()
+                sections.append({
+                    "section": current_section,
+                    "content": "\n".join(current_content)
+                })
 
-            if i + 1 < len(matches):
-                end = matches[i + 1].start()
+                current_section = line
+                current_content = []
+
             else:
-                end = len(text)
 
-            content = text[start:end].strip()
+                current_content.append(line)
 
-            chunks.append({
-                "section": section_name,
-                "content": content
-            })
+        sections.append({
+            "section": current_section,
+            "content": "\n".join(current_content)
+        })
 
-        return chunks
+        return sections
