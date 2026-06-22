@@ -44,15 +44,11 @@ with st.sidebar:
     st.subheader("Conversation")
     st.write("Use the chat box below to ask about your uploaded papers.")
 
-col1, col2 = st.columns([2, 1])
-
-with col1:
-    user_query = st.text_input("Ask a question", key="query_input")
+user_query = st.text_input("Ask a question", key="query_input")
+col_send, col_clear = st.columns([1, 5])
+with col_send:
     if st.button("Send") and user_query:
-        payload = {
-            "query": user_query,
-            "history": st.session_state.history,
-        }
+        payload = {"query": user_query, "history": st.session_state.history}
         response = requests.post(f"{API_BASE}/chat", json=payload)
         if response.ok:
             data = response.json()
@@ -60,19 +56,23 @@ with col1:
             st.session_state.citations = data["citations"]
         else:
             st.error(response.text)
-
+with col_clear:
     if st.button("Clear History"):
         st.session_state.history = []
         st.session_state.citations = []
 
-with col2:
-    st.subheader("📎 Citations")
-    if "citations" in st.session_state and st.session_state.citations:
-        for i, citation in enumerate(st.session_state.citations, 1):
+# Citations — horizontal row above conversation
+st.markdown("---")
+st.subheader("📎 Citations")
+if "citations" in st.session_state and st.session_state.citations:
+    citations = st.session_state.citations
+    cols = st.columns(len(citations))
+    for col, (i, citation) in zip(cols, enumerate(citations, 1)):
+        with col:
             st.markdown(
                 f"""
                 <div style="background:#1e1e2e;border-left:3px solid #7c6af7;padding:8px 12px;
-                            border-radius:6px;margin-bottom:8px;font-size:0.85rem;line-height:1.5">
+                            border-radius:6px;font-size:0.82rem;line-height:1.5;height:100%">
                     <span style="color:#a78bfa;font-weight:600">[{i}]</span>&nbsp;
                     <span style="color:#e2e8f0">{citation.get('paper','Unknown')}</span><br/>
                     <span style="color:#94a3b8;font-style:italic">{citation.get('section','Unknown section')}</span>
@@ -80,8 +80,8 @@ with col2:
                 """,
                 unsafe_allow_html=True,
             )
-    else:
-        st.caption("No citations yet.")
+else:
+    st.caption("No citations yet.")
 
 st.markdown("---")
 
