@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-API_BASE = "http://localhost:8000"
+API_BASE = "http://localhost:8001"
 
 st.set_page_config(page_title="ResearchPaperAI", layout="wide")
 
@@ -44,7 +44,7 @@ with st.sidebar:
     st.subheader("Conversation")
     st.write("Use the chat box below to ask about your uploaded papers.")
 
-col1, col2 = st.columns([3, 1])
+col1, col2 = st.columns([2, 1])
 
 with col1:
     user_query = st.text_input("Ask a question", key="query_input")
@@ -66,12 +66,22 @@ with col1:
         st.session_state.citations = []
 
 with col2:
-    st.subheader("Citation Display")
+    st.subheader("📎 Citations")
     if "citations" in st.session_state and st.session_state.citations:
-        for citation in st.session_state.citations:
-            st.markdown(f"- **{citation.get('paper','Unknown')}** — {citation.get('section','Unknown section')}")
+        for i, citation in enumerate(st.session_state.citations, 1):
+            st.markdown(
+                f"""
+                <div style="background:#1e1e2e;border-left:3px solid #7c6af7;padding:8px 12px;
+                            border-radius:6px;margin-bottom:8px;font-size:0.85rem;line-height:1.5">
+                    <span style="color:#a78bfa;font-weight:600">[{i}]</span>&nbsp;
+                    <span style="color:#e2e8f0">{citation.get('paper','Unknown')}</span><br/>
+                    <span style="color:#94a3b8;font-style:italic">{citation.get('section','Unknown section')}</span>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
     else:
-        st.write("No citations available yet.")
+        st.caption("No citations yet.")
 
 st.markdown("---")
 

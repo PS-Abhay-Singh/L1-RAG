@@ -1,18 +1,15 @@
 from backend.app.retrieval.multi_query_retriever import MultiQueryRetriever
+from backend.app.retrieval.bm25_retriever import BM25Retriever
 from backend.app.retrieval.rrf import RRF
 
 
 class FusionRetriever:
 
     @staticmethod
-    def retrieve(query: str):
+    def retrieve(query: str, top_k: int = 5) -> list:
+        """MultiQuery vector search → RRF fusion → BM25 re-rank."""
+        multi_results = MultiQueryRetriever.retrieve(query)
 
-        multi_results = MultiQueryRetriever.retrieve(
-            query
-        )
+        fused = RRF.fuse(multi_results)
 
-        fused_results = RRF.fuse(
-            multi_results
-        )
-
-        return fused_results[:5]
+        return BM25Retriever.rerank(query, fused, top_k=top_k)
