@@ -1,14 +1,57 @@
-from langchain_core.prompts import ChatPromptTemplate
-from ..llm import get_llm
+from app.retrieval.fusion_retriever import FusionRetriever
+from app.llm import get_llm
 
-llm = get_llm()
 
-prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a comparative analysis agent. Compare the provided research papers across methodology, results, and conclusions. Return a structured JSON comparison."),
-    ("human", "Query: {query}\n\nPapers:\n{papers}")
-])
+class ComparisonAgent:
 
-chain = prompt | llm
+    @staticmethod
+    def compare(query: str):
 
-def compare_papers(query: str, papers: str) -> str:
-    return chain.invoke({"query": query, "papers": papers}).content
+        results = FusionRetriever.retrieve(query)
+
+        context = "\n\n".join(
+            [
+                match.metadata["content"]
+                for match in results
+            ]
+        )
+
+        llm = get_llm()
+
+        prompt = f"""
+You are a Research Comparison Expert.
+
+Using ONLY the provided context,
+compare the technologies, frameworks,
+or approaches mentioned.
+
+Format:
+
+# Overview
+
+# Architecture Comparison
+
+# Methodology Comparison
+
+# Advantages
+
+# Limitations
+
+# Final Verdict
+
+CONTEXT:
+
+{context}
+
+QUESTION:
+
+{query}
+"""
+
+        response = llm.invoke(prompt)
+
+        return response.content
+
+
+def compare_papers(query: str):
+    return ComparisonAgent.compare(query)
