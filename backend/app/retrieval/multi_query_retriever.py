@@ -1,5 +1,5 @@
-from app.retrieval.retriever import Retriever
-from app.agents.query_translation import translate_query
+from backend.app.retrieval.retriever import Retriever
+from backend.app.agents.query_translation import translate_query
 
 
 class MultiQueryRetriever:

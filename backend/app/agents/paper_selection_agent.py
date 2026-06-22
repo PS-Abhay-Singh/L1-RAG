@@ -1,4 +1,4 @@
-from app.llm import get_llm
+from backend.app.llm import get_llm
 import json
 
 

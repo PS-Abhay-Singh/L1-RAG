@@ -1,5 +1,5 @@
-from app.retrieval.multi_query_retriever import MultiQueryRetriever
-from app.retrieval.rrf import RRF
+from backend.app.retrieval.multi_query_retriever import MultiQueryRetriever
+from backend.app.retrieval.rrf import RRF
 
 
 class FusionRetriever:

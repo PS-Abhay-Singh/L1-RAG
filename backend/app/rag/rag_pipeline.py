@@ -1,5 +1,5 @@
-from app.retrieval.fusion_retriever import FusionRetriever
-from app.agents.answer_generation import generate_answer
+from backend.app.retrieval.fusion_retriever import FusionRetriever
+from backend.app.agents.answer_generation import generate_answer
 
 
 class RAGPipeline:
@@ -24,3 +24,22 @@ class RAGPipeline:
         )
 
         return answer
+    @staticmethod
+    def ask_with_sources(query: str):
+        """Return answer and retrieval results for citation extraction."""
+        results = FusionRetriever.retrieve(query)
+
+        context = "\n\n".join(
+            [
+                match.metadata["content"]
+                for match in results
+            ]
+        )
+
+        answer = generate_answer(
+            query=query,
+            context=context
+        )
+
+        return answer, results
+

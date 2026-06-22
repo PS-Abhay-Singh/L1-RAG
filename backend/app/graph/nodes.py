@@ -1,8 +1,8 @@
-from app.agents.research_agent import (
+from backend.app.agents.research_agent import (
     ResearchAgent
 )
 
-from app.agents.comparison_agent import (
+from backend.app.agents.comparison_agent import (
     ComparisonAgent
 )
 

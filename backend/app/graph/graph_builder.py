@@ -3,15 +3,15 @@ from langgraph.graph import (
     END
 )
 
-from app.graph.state import (
+from backend.app.graph.state import (
     GraphState
 )
 
-from app.graph.router import (
+from backend.app.graph.router import (
     route_query
 )
 
-from app.graph.nodes import (
+from backend.app.graph.nodes import (
     research_node,
     comparison_node
 )

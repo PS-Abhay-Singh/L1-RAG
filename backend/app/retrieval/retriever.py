@@ -1,5 +1,5 @@
-from app.embeddings.embedding_generator import EmbeddingGenerator
-from app.vectordb.pinecone_client import index
+from backend.app.embeddings.embedding_generator import EmbeddingGenerator
+from backend.app.vectordb.pinecone_client import index
 
 
 class Retriever:

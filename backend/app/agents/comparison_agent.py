@@ -1,5 +1,5 @@
-from app.retrieval.fusion_retriever import FusionRetriever
-from app.llm import get_llm
+from backend.app.retrieval.fusion_retriever import FusionRetriever
+from backend.app.llm import get_llm
 
 
 class ComparisonAgent:

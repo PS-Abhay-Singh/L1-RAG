@@ -2,6 +2,7 @@
 __pycache__
 cmd.txt
 .env
+scripts
 
 # Ignore data files, keep folder structure
 data/pdfs/*

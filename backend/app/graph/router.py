@@ -1,6 +1,6 @@
 import json
 
-from app.agents.query_understanding import (
+from backend.app.agents.query_understanding import (
     understand_query
 )
 

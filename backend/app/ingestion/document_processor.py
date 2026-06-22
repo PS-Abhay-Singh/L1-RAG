@@ -1,12 +1,12 @@
 import os
 
-from app.ingestion.pdf_loader import PDFLoader
-from app.ingestion.metadata_extractor import MetadataExtractor
-from app.ingestion.chunker import SectionChunker
-from app.ingestion.recursive_chunker import RecursiveChunker
+from backend.app.ingestion.pdf_loader import PDFLoader
+from backend.app.ingestion.metadata_extractor import MetadataExtractor
+from backend.app.ingestion.chunker import SectionChunker
+from backend.app.ingestion.recursive_chunker import RecursiveChunker
 
-from app.embeddings.embedding_generator import EmbeddingGenerator
-from app.vectordb.vector_store import VectorStore
+from backend.app.embeddings.embedding_generator import EmbeddingGenerator
+from backend.app.vectordb.vector_store import VectorStore
 
 
 class DocumentProcessor:
