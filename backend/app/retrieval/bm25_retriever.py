@@ -1,4 +1,9 @@
+import re
 from rank_bm25 import BM25Okapi
+
+
+def _tokenize(text: str) -> list[str]:
+    return re.findall(r"[a-z0-9]+", text.lower())
 
 
 class BM25Retriever:
@@ -10,13 +15,11 @@ class BM25Retriever:
             return []
 
         tokenized_corpus = [
-            match.metadata.get("content", "").lower().split()
+            _tokenize(match.metadata.get("content", ""))
             for match in matches
         ]
-        query_tokens = query.lower().split()
-
         bm25 = BM25Okapi(tokenized_corpus)
-        scores = bm25.get_scores(query_tokens)
+        scores = bm25.get_scores(_tokenize(query))
 
         scored = sorted(zip(matches, scores), key=lambda x: x[1], reverse=True)
         return [match for match, _ in scored[:top_k]]
