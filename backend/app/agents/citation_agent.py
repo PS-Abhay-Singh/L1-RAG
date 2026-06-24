@@ -8,8 +8,9 @@ class CitationAgent:
         for match in results:
 
             citations.append({
-                "paper": match.metadata["paper_title"],
-                "section": match.metadata["section"]
+                "source": match.metadata.get("paper_title", "Unknown"),
+                "section": match.metadata.get("section", "Unknown"),
+                "paper": match.metadata.get("paper_title", "Unknown")  # backwards compat
             })
 
         return citations

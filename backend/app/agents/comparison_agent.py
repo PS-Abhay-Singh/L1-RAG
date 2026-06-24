@@ -19,25 +19,15 @@ class ComparisonAgent:
         llm = get_llm()
 
         prompt = f"""
-You are a Research Comparison Expert.
+You are a Document Comparison Expert.
 
-Using ONLY the provided context,
-compare the technologies, frameworks,
-or approaches mentioned.
+Using ONLY the provided context, compare the topics, entities, approaches,
+or items mentioned in the question.
+Adapt your comparison structure to the actual content — it may be research papers,
+products, legal clauses, processes, or any other type of document content.
 
-Format:
-
-# Overview
-
-# Architecture Comparison
-
-# Methodology Comparison
-
-# Advantages
-
-# Limitations
-
-# Final Verdict
+Provide a clear structured comparison with headings relevant to what is being compared.
+End with a summary or verdict.
 
 CONTEXT:
 

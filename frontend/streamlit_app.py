@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-API_BASE = "http://localhost:8001"
+API_BASE = "http://localhost:8000"
 
 st.set_page_config(page_title="ResearchPaperAI", layout="wide")
 

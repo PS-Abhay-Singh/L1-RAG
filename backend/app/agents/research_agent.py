@@ -19,24 +19,14 @@ class ResearchAgent:
         llm = get_llm()
 
         prompt = f"""
-You are a Research Analyst.
+You are a Document Analyst.
 
-Using ONLY the provided context,
-generate a structured research analysis.
+Using ONLY the provided context, answer the question with a structured analysis.
+Adapt your response format to the type of content — it may be a research paper,
+technical manual, legal document, report, book chapter, or any other document type.
 
-Format:
-
-# Topic
-
-# Problem Being Solved
-
-# Proposed Solution
-
-# Methodology
-
-# Advantages
-
-# Limitations
+Provide a clear, well-structured response with relevant headings based on what
+the content actually contains.
 
 CONTEXT:
 

@@ -34,7 +34,7 @@ class DocumentProcessor:
         # -----------------------------
 
         print("Extracting Metadata...")
-        metadata = MetadataExtractor.extract(text)
+        metadata = MetadataExtractor.extract(text, pdf_path)
 
         # Fallback title
         if not metadata.get("title"):
